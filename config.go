@@ -52,7 +52,7 @@ func (config *Config) parseConfig() {
         panic(err)
     }
 
-    data, err := ioutil.ReadFile(usr.HomeDir + "/.config/tmux-url-config.yml")
+    data, err := ioutil.ReadFile(usr.HomeDir + "/.config/tmux-url-nav.yml")
 
     // if can't open the config, just ignore it
     if err != nil {
