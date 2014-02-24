@@ -21,9 +21,13 @@ type Screen struct {
 }
 
 func NewScreen() *Screen {
-    screen := &Screen{buffer:getBuffer(), config: NewConfig()}
+    screen := &Screen{buffer: getBuffer(), config: NewConfig()}
     screen.initScreen()
     return screen
+}
+
+func (screen *Screen) selectWindow() {
+    tmuxSelectWindow(screen.config.WINDOWID)
 }
 
 func (screen *Screen) initScreen() {
@@ -77,15 +81,17 @@ func (screen *Screen) handleUserInput() {
     selected := 0
     b := make([]byte, 1)
 
+    url, current := screen.findUrls(selected, lines)
+
+    if current == 0 {
+        tmuxDisplayMsg("No URLs found")
+        return
+    }
+
+    screen.selectWindow()
+
 MainLoop:
     for {
-        url, current := screen.findUrls(selected, lines)
-
-        if current == 0 {
-            tmuxDisplayMsg("No URLs found")
-            break
-        }
-
         os.Stdin.Read(b)
         key := string(b)
 
@@ -116,6 +122,8 @@ MainLoop:
         } else if selected < 0 {
             selected = current - 1
         }
+
+        url, current = screen.findUrls(selected, lines)
     }
 }
 

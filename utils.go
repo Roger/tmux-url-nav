@@ -3,6 +3,7 @@ package main
 import (
     "fmt"
     "regexp"
+    "strconv"
     "os/exec"
     "strings"
 )
@@ -43,6 +44,20 @@ func moveCursor(x int, y int) string {
 
 func tmuxDisplayMsg(msg string) {
     exec.Command("tmux", "display-message", "[tmux-url-nav] "+msg).Run()
+}
+
+func tmuxCapturePane() {
+    exec.Command("tmux", "capture-pane", "-eJ").Run()
+}
+
+func tmuxOpenInnerWindow(title string, command string, windowid int) {
+    exec.Command("tmux", "new-window", "-dn", title,
+                 "-t", strconv.Itoa(windowid),
+                 command + " inner").Run()
+}
+
+func tmuxSelectWindow(windowid int) {
+    exec.Command("tmux", "select-window", "-t", strconv.Itoa(windowid)).Run()
 }
 
 func getBuffer() string {

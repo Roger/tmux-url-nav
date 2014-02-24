@@ -25,16 +25,20 @@ type Colors struct {
 }
 
 type Config struct {
+    TITLE         string
+    WINDOWID      int
     COLORS        Colors
     OPENER        string
     SHOW_POSITION bool
 }
 
 func NewConfig() *Config {
-    config := &Config{OPENER: "firefox", SHOW_POSITION: true,
+    config := &Config{OPENER: "firefox", TITLE: "Select Url", WINDOWID: 999,
+                      SHOW_POSITION: true,
         COLORS: Colors{
             DEFAULT_URL: Color{FOREGROUND: 6},
-            ACTIVE_URL:  Color{BACKGROUND: 17, FOREGROUND: 7, UNDERLINED: true},
+            ACTIVE_URL:  Color{BACKGROUND: 17, FOREGROUND: 7,
+                               UNDERLINED: true},
             POSITION:    Color{FOREGROUND: 226},
         }}
     config.parseConfig()
