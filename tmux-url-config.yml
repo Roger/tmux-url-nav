@@ -1,0 +1,11 @@
+opener: firefox
+show_position: true
+colors:
+  default_url:
+    foreground: 6
+  active_url:
+    background: 17
+    foreground: 7
+    underlined: true
+  position:
+    foreground: 226
